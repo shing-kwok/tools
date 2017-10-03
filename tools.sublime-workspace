@@ -1,0 +1,875 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"target",
+				"targetLocation"
+			],
+			[
+				"stor",
+				"storageTypeElem"
+			],
+			[
+				"targ",
+				"targetLocation"
+			],
+			[
+				"cand",
+				"candRating"
+			],
+			[
+				"stroa",
+				"storageType"
+			],
+			[
+				"6waves",
+				"6waves_authorized_keys"
+			],
+			[
+				"deply",
+				"deploy_script"
+			],
+			[
+				"scr",
+				"scriptDir"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 1811,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "price/calc.php",
+			"settings":
+			{
+				"buffer_size": 8705,
+				"encoding": "UTF-8",
+				"line_ending": "CR"
+			}
+		},
+		{
+			"file": "price/price.php",
+			"settings":
+			{
+				"buffer_size": 22107,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "<?php"
+			}
+		},
+		{
+			"contents": "# ipsec.conf - strongSwan IPsec configuration file\n\nconfig setup\n    charondebug=\"ike 2, knl 2, cfg 2, net 2, esp 2, dmn 2,  mgr 2\"\n\nconn %default\n    keyexchange=ikev2\n    ike=aes128-sha256-ecp256,aes256-sha384-ecp384,aes128-sha256-modp2048,aes128-sha1-modp2048,aes256-sha384-modp4096,aes256-sha256-modp4096,aes256-sha1-modp4096,aes128-sha256-modp1536,aes128-sha1-modp1536,aes256-sha384-modp2048,aes256-sha256-modp2048,aes256-sha1-modp2048,aes128-sha256-modp1024,aes128-sha1-modp1024,aes256-sha384-modp1536,aes256-sha256-modp1536,aes256-sha1-modp1536,aes256-sha384-modp1024,aes256-sha256-modp1024,aes256-sha1-modp1024!\n    esp=aes128gcm16-ecp256,aes256gcm16-ecp384,aes128-sha256-ecp256,aes256-sha384-ecp384,aes128-sha256-modp2048,aes128-sha1-modp2048,aes256-sha384-modp4096,aes256-sha256-modp4096,aes256-sha1-modp4096,aes128-sha256-modp1536,aes128-sha1-modp1536,aes256-sha384-modp2048,aes256-sha256-modp2048,aes256-sha1-modp2048,aes128-sha256-modp1024,aes128-sha1-modp1024,aes256-sha384-modp1536,aes256-sha256-modp1536,aes256-sha1-modp1536,aes256-sha384-modp1024,aes256-sha256-modp1024,aes256-sha1-modp1024,aes128gcm16,aes256gcm16,aes128-sha256,aes128-sha1,aes256-sha384,aes256-sha256,aes256-sha1!\n    dpdaction=clear\n    dpddelay=300s\n    rekey=no\n    left=%any\n    leftsubnet=0.0.0.0/0\n    leftcert=vpnHostCert.der\n    right=%any\n    rightdns=8.8.8.8,8.8.4.4\n    rightsourceip=10.42.42.0/24\n\nconn IPSec-IKEv2\n    keyexchange=ikev2\n    auto=add\n\nconn IPSec-IKEv2-EAP\n    also=\"IPSec-IKEv2\"\n    rightauth=eap-mschapv2\n    rightauthby2=pubkey\n    rightsendcert=never\n    eap_identity=%any\n\nconn CiscoIPSec\n    keyexchange=ikev1\n    forceencaps=yes\n    authby=xauthrsasig\n    xauth=server\n    auto=add",
+			"settings":
+			{
+				"buffer_size": 1700,
+				"line_ending": "Unix",
+				"name": "# ipsec.conf - strongSwan IPsec configuration file"
+			}
+		},
+		{
+			"contents": "config setup\n    charondebug=\"ike 1, knl 1, cfg 0\"\n    uniqueids=no\n\nconn ikev2-vpn\n    auto=add\n    compress=no\n    type=tunnel\n    keyexchange=ikev2\n    fragmentation=yes\n    forceencaps=yes\n    ike=aes256-sha1-modp1024,3des-sha1-modp1024!\n    esp=aes256-sha1,3des-sha1!\n    dpdaction=clear\n    dpddelay=300s\n    rekey=no\n    left=%any\n    leftid=@mobilelog.6waves.com\n    leftcert=/etc/strongswan/ipsec.d/certs/vpnHostCert.der\n    leftsendcert=always\n    leftsubnet=0.0.0.0/0\n    right=%any\n    rightid=%any\n    rightauth=eap-mschapv2\n    rightdns=8.8.8.8,8.8.4.4\n    rightsourceip=10.10.10.0/24\n    rightsendcert=never\n    eap_identity=%identity",
+			"settings":
+			{
+				"buffer_size": 649,
+				"line_ending": "Unix",
+				"name": "config setup"
+			}
+		},
+		{
+			"contents": "strongswan pki --self --ca --lifetime 3650 --in ipsec.d/private/strongswanKey.der --type rsa --dn \"C=NL, O=6waves Ltd, CN=6waves VPN Root CA\" --outform der > ipsec.d/cacerts/strongswanCert.der\n\nstrongswan pki --pub --in ipsec.d/private/vpnHostKey.der --type rsa | strongswan pki --issue --lifetime 730 --cacert ipsec.d/cacerts/strongswanCert.der --cakey ipsec.d/private/strongswanKey.der --dn \"C=NL, O=6waves Ltd, CN=mobilelog.6waves.com\" --san mobilelog.6waves.com --san 45.32.18.189  --san @45.32.18.189 --flag serverAuth --flag ikeIntermediate --outform der > ipsec.d/certs/vpnHostCert.der\n\nstrongswan pki --pub --in ipsec.d/private/6wavesKey.der --type rsa | strongswan pki --issue --lifetime 730 --cacert ipsec.d/cacerts/strongswanCert.der --cakey ipsec.d/private/strongswanKey.der --dn \"C=NL, O=6waves Ltd, CN=mobilelog@6waves.com\" --san \"mobilelog@6waves.com\" --outform der > ipsec.d/certs/6wavesCert.der\n\nopenssl rsa -inform DER -in ipsec.d/private/6wavesKey.der -out ipsec.d/private/6wavesKey.pem -outform PEM\nopenssl x509 -inform DER -in ipsec.d/certs/6wavesCert.der -out ipsec.d/certs/6wavesCert.pem -outform PEM\nopenssl x509 -inform DER -in ipsec.d/cacerts/strongswanCert.der -out ipsec.d/cacerts/strongswanCert.pem -outform PEM\n\nopenssl pkcs12 -export  -inkey ipsec.d/private/6wavesKey.pem -in ipsec.d/certs/6wavesCert.pem -name \"6waves VPN Certificate\"  -certfile ipsec.d/cacerts/strongswanCert.pem -caname \"6waves VPN Root CA\" -out 6waves.p12\n\n\niptables -A FORWARD -m state --state RELATED,ESTABLISHED -j ACCEPT\niptables -A FORWARD -s 10.42.42.0/24  -j ACCEPT\niptables -A INPUT -i eth0 -p esp -j ACCEPT\niptables -A INPUT -i eth0 -p ah -j ACCEPT\niptables -A INPUT -i eth0 -p udp --dport 500 -j ACCEPT\niptables -A INPUT -i eth0 -p tcp --dport 500 -j ACCEPT\niptables -A INPUT -i eth0 -p udp --dport 4500 -j ACCEPT\niptables -A INPUT -i eth0 -p udp --dport 1701 -j ACCEPT\niptables -A INPUT -i eth0 -p tcp --dport 1723 -j ACCEPT\niptables -A FORWARD -j REJECT\niptables -t nat -A POSTROUTING -s 10.42.42.0/24 -o eth0 -j MASQUERADE",
+			"settings":
+			{
+				"buffer_size": 2037,
+				"line_ending": "Unix",
+				"name": "strongswan pki --self --ca --lifetime 3650 --in ip"
+			}
+		},
+		{
+			"contents": "# Root Key & Cert\nsudo su -\ncd /etc/strongswan/\nstrongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/rootKey.pem\nchmod 600 ipsec.d/private/rootKey.pem\n\nstrongswan pki --self --ca --lifetime 3650 \\\n--in ipsec.d/private/rootKey.pem \\\n--type rsa --dn \"C=HK, O=Six Waves Inc, CN=6waves VPN Root CA\" \\\n--outform pem > ipsec.d/cacerts/rootCert.pem\n\n\n# Host Key & Cert\nstrongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/hostKey.pem\nchmod 600 ipsec.d/private/hostKey.pem\n\nstrongswan pki --pub --in ipsec.d/private/hostKey.pem \\\n--type rsa | strongswan pki --issue --lifetime 1825 \\\n--cacert ipsec.d/cacerts/rootCert.pem \\\n--cakey ipsec.d/private/rootKey.pem \\\n--dn \"C=HK, O=Six Waves Inc, CN=lw1.6waves.com\" \\\n--flag serverAuth --flag ikeIntermediate \\\n--outform pem > ipsec.d/certs/hostCert.pem\n\n\n# IPSec config\ncp -a ipsec.conf ipsec.conf.original\necho \"config setup\n    charondebug=\"ike 1, knl 1, cfg 0\"\n    uniqueids=no\n\nconn ikev2-vpn\n    auto=add\n    compress=no\n    type=tunnel\n    keyexchange=ikev2\n    fragmentation=yes\n    forceencaps=yes\n    ike=aes256-sha1-modp1024,3des-sha1-modp1024!\n    esp=aes256-sha1,3des-sha1!\n    dpdaction=clear\n    dpddelay=300s\n    rekey=no\n    left=%any\n    leftid=@lw1.6waves.com\n    leftcert=/etc/strongswan/ipsec.d/certs/hostCert.pem\n    leftsendcert=always\n    leftsubnet=0.0.0.0/0\n    right=%any\n    rightid=%any\n    rightauth=eap-mschapv2\n    rightdns=8.8.8.8,8.8.4.4\n    rightsourceip=10.10.10.0/24\n    rightsendcert=never\n    eap_identity=%identity\" > ipsec.conf\n\necho \"lw1.6waves.com : RSA \\\"/etc/strongswan/ipsec.d/private/hostKey.pem\\\"\n\n6w-mobile %any% : EAP \\\"6wMobileVPN\\\"\" > ipsec.secretss\nstrongswan start\n\n\n# Client Key, Cert & P12 package\nstrongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/clientKey.pem\nchmod 600 ipsec.d/private/clientKey.pem\n\nstrongswan pki --pub --in ipsec.d/private/clientKey.pem \\\n--type rsa | strongswan pki --issue --lifetime 730 \\\n--cacert ipsec.d/cacerts/rootCert.pem \\\n--cakey ipsec.d/private/rootKey.pem \\\n--dn \"C=HK, O=Six Waves Inc, CN=mobilelog@6waves.com\" \\\n--outform pem > ipsec.d/certs/clientCert.pem\n\nopenssl pkcs12 -export  -inkey ipsec.d/private/clientKey.pem -in ipsec.d/certs/clientCert.pem -name \"6waves VPN Certificate\"  -certfile ipsec.d/cacerts/rootCert.pem -caname \"6waves VPN Root CA\" -out 6waves.p12",
+			"settings":
+			{
+				"buffer_size": 2367,
+				"line_ending": "Unix",
+				"name": "# Root Key & Cert"
+			}
+		},
+		{
+			"contents": "Aug 10 14:30:51 Shings-MacBook-Pro nesessionmanager[2025]: NESMIKEv2VPNSession[6waves VPN:892344F3-1745-4043-B33A-3D087084CB52]: Received a start command from com.apple.preference.network.re[1895]\nAug 10 14:30:51 Shings-MacBook-Pro nesessionmanager[2025]: NESMIKEv2VPNSession[6waves VPN:892344F3-1745-4043-B33A-3D087084CB52]: status changed to connecting\nAug 10 14:30:52 Shings-MacBook-Pro nesessionmanager[2025]: Failed to find the VPN app for plugin type com.apple.neplugin.IKEv2\nAug 10 14:30:52 Shings-MacBook-Pro neagent[3205]: IKEv2 Plugin: ikev2_dns_callback: Error -65554\nAug 10 14:30:52 Shings-MacBook-Pro kernel[0]: ipsec_ctl_connect: creating interface ipsec0\nAug 10 14:30:52 Shings-MacBook-Pro configd[63]: network changed\nAug 10 14:30:53 Shings-MacBook-Pro neagent[3205]: Received error: Error (Authentication Failed)\nAug 10 14:30:53 Shings-MacBook-Pro neagent[3205]: Failed to process IKE Auth packet\nAug 10 14:30:53 Shings-MacBook-Pro neagent[3205]: BUG in libdispatch client: kevent[EVFILT_READ] delete: \"Bad file descriptor\" - 0x9\nAug 10 14:30:53 Shings-MacBook-Pro nesessionmanager[2025]: NESMIKEv2VPNSession[6waves VPN:892344F3-1745-4043-B33A-3D087084CB52]: status changed to disconnecting\nAug 10 14:30:53 Shings-MacBook-Pro kernel[0]: SIOCPROTODETACH_IN6: ipsec0 error=6\nAug 10 14:30:53 Shings-MacBook-Pro nesessionmanager[2025]: NESMIKEv2VPNSession[6waves VPN:892344F3-1745-4043-B33A-3D087084CB52]: status changed to disconnected, last stop reason Stop command received\nAug 10 14:30:53 Shings-MacBook-Pro symptomsd[219]: nw_interface_get_agents SIOCGIFAGENTIDS failed for interface \"ipsec0\" (index 10, type other): [6] Device not configured\nAug 10 14:30:53 Shings-MacBook-Pro configd[63]: network changed\nAug 10 14:30:53 Shings-MacBook-Pro symptomsd[219]: nw_interface_get_agents SIOCGIFAGENTIDS failed for interface \"ipsec0\" (index 10, type other): [6] Device not configured",
+			"settings":
+			{
+				"buffer_size": 1895,
+				"line_ending": "Unix",
+				"name": "Aug 10 14:30:51 Shings-MacBook-Pro nesessionmanage"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 411.0,
+		"history":
+		[
+			"Package Control help",
+			"Package Control Install Package",
+			"Package Control",
+			"Package Control: Install Package",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/shing/sites/tools",
+		"/Users/shing/sites/tools/price"
+	],
+	"file_history":
+	[
+		"/Users/shing/sites/tools/price/manual-tool/parse-vultr.php",
+		"/Users/shing/sites/tools/price/manual-tool/parse-linode.php",
+		"/Users/shing/sites/tools/price/manual-tool/parse-aws.js",
+		"/Users/shing/sites/tools/price/manual-tool/parse-aws.php",
+		"/Users/shing/sites/tools/price/ec2-us.json",
+		"/Users/shing/sites/tools/price/parse-vultr.js",
+		"/Users/shing/sites/tools/price/parse-vultr.php",
+		"/Users/shing/sites/tools/price/parse-linode.js",
+		"/Users/shing/sites/tools/price/parse-linode.php",
+		"/Users/shing/sites/tools/price/parse-aws.js",
+		"/Users/shing/sites/tools/price/parse-aws.php",
+		"/Users/shing/sites/tools/index.php",
+		"/Users/shing/sites/tools/price/ec2.json",
+		"/Users/shing/sites/tools/price/index.json",
+		"/Users/shing/Downloads/Documentation/服務器配置.txt",
+		"/Users/shing/sites/chrome/chrome.sublime-workspace",
+		"/Users/shing/sites/sl7/setup_machine/setup/mrtg.cfg",
+		"/Users/shing/sites/sl7/setup_machine/security/iptables/ip.publish.gg",
+		"/Users/shing/sites/sl7/setup_machine/security/iptables/ip.publish.aws",
+		"/Users/shing/sites/sl7/setup_machine/setup/iptables",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_partner_helper.ubuntu_publish.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_partner_helper.ubuntu.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/config/ifcfg-eth1",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/setup_partner.ubuntu.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/config/logrotate/httpd",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/config/logrotate/nginx",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/config/logrotate/lighttpd",
+		"/Users/shing/sites/sl7/setup_machine/setup_new/setup_partner_helper.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/config/ifcfg-eth1",
+		"/Users/shing/sites/sl7/setup_machine/setup_partner_helper_publish_new.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup_partner_new.sh",
+		"/Users/shing/sites/sl7/setup_machine/security/iptables/ip.6w.lw",
+		"/Users/shing/sites/sl7/setup_machine/security/fail2ban/jail.publish",
+		"/Users/shing/sites/sl7/setup_machine/setup/check_conntrack.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_partner_helper_internal.sh",
+		"/Users/shing/sites/sl7/setup_machine/security/iptables/ip.publish.lw",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_mdraid-centos.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_aacraid-centos.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/nrpe.cfg",
+		"/Users/shing/sites/sl7/setup_scripts/6w-hk-centos.txt",
+		"/Users/shing/sites/sl7/setup_machine/deployment/6w-list",
+		"/Users/shing/sites/sl7/setup_machine/setup/arcconf",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_hpraid-centos.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_aacraid-ud.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/setup_mdraid-ud.sh",
+		"/Users/shing/sites/sl7/setup_machine/setup/httpd_logrotate.conf",
+		"/Users/shing/sites/dev1/cost/game_action.php",
+		"/Users/shing/sites/dev1/cost/refetch_map.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/vt_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/tkr_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/sl_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/nl_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/lw_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/ln_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/ec_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/cn_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/aws_check.php",
+		"/Users/shing/sites/dev1/library/php/cost/vultr.inc",
+		"/Users/shing/sites/dev1/cost/jquery-easyui/jquery.easyui.min.js",
+		"/Users/shing/sites/dev1/library/php/cost/config.inc",
+		"/Users/shing/sites/dev1/library/php/cost/database.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/cdnnet_import.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/cdn_import.php",
+		"/Users/shing/sites/dev1/cost/refetch_option.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/api_lw_import.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/lw_import.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/aws_import.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/check_map.php",
+		"/Users/shing/sites/dev1/library/php/cost/linode.inc",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/ln_import.php",
+		"/Users/shing/sites/dev1/cost/menu_json.php",
+		"/Users/shing/sites/dev1/cost/game_map_json.php",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/softlayer_import.php",
+		"/Users/shing/sites/dev1/cost/nl_import.php",
+		"/Users/shing/sites/dev1/cost/gt_report_json.php",
+		"/Users/shing/sites/dev1/cost/ec_report_json.php",
+		"/Users/shing/sites/dev1/cost/aws_report_json.php",
+		"/Users/shing/sites/dev1/cost/aws_report.php",
+		"/Users/shing/sites/dev1/cost/index.php",
+		"/Users/shing/sites/dev1/library/php/google/config.inc",
+		"/Users/shing/sites/dev1/library/php/google/google-api-php-client-2.1.1_PHP54/vendor/google/apiclient-services/src/Google/Service/Storagetransfer/AwsS3Data.php",
+		"/Users/shing/sites/dev1/library/php/google/google-api-php-client-2.1.1_PHP54/vendor/google/apiclient-services/src/Google/Service/Storage.php",
+		"/Users/shing/sites/dev1/library/php/google/google-api-php-client-2.1.1_PHP54/vendor/google/apiclient-services/src/Google/Service/Storage/Resource/Objects.php",
+		"/Users/shing/sites/dev1/library/php/google/google-api-php-client-2.1.1_PHP54/vendor/google/apiclient-services/src/Google/Service/Storage/StorageObject.php",
+		"/Users/shing/sites/dev1/library/php/google/google-cloud-sdk/vendor/google/cloud/src/ServiceBuilder.php",
+		"/Users/shing/sites/dev1/library/php/cost/tsukaeru.inc",
+		"/Users/shing/sites/dev1/library/php/aws/config.inc",
+		"/Users/shing/sites/dev1/library/php/aws/get_billing.php",
+		"/Users/shing/sites/dev1/library/php/cost/leaseweb.inc",
+		"/Users/shing/sites/dev1/library/php/aws/aws-autoloader.php",
+		"/Users/shing/sites/dev1/library/php/aws/393264715719-aws-cost-allocation-2015-12.csv",
+		"/Users/shing/sites/dev1/library/php/cost/scripts/api_lw_import.20150826.php",
+		"/Users/shing/sites/dev1/cost/sl_report_json.php",
+		"/Users/shing/sites/dev1/cost/tommy.php",
+		"/Users/shing/sites/dev1/cost/nl_report.php",
+		"/Users/shing/sites/dev1/cost/cn_report.php",
+		"/Users/shing/sites/dev1/cost/check_user.php"
+	],
+	"find":
+	{
+		"height": 241.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/shing/sites/dev1"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"mobilelog",
+			"dp",
+			"console.log",
+			"dps",
+			"HDD",
+			"'hdd' => 0.08,",
+			"result-table",
+			"location",
+			"matchingIndex",
+			"matcingIndex",
+			"dp",
+			"numSuggestedPredefined",
+			"priceDetails",
+			"c3.large",
+			"ntp",
+			"ntpd",
+			"ntp",
+			"190644348",
+			"194152341",
+			"csv",
+			"lost+found",
+			"csv",
+			"data/",
+			"csv",
+			"macau",
+			"user",
+			"twgolden",
+			"admin",
+			"macau",
+			"log",
+			"wonderland",
+			"nrpe",
+			"http",
+			"url",
+			"iptables",
+			"unzip",
+			"tar",
+			"snmp",
+			"mrtg",
+			"snmp",
+			"locale",
+			"fail2ban",
+			"chkconfig",
+			"selinux",
+			"gg",
+			"update-rc.d: warning:",
+			"update-rc.d sn",
+			"snmp",
+			"update-rc",
+			"update-rc.d: warning:",
+			"snmp",
+			"update-rc.d: warning:",
+			"sendmail",
+			"update-rc.d: warning:",
+			"warning",
+			"us.pool.ntp.org",
+			"locale",
+			"ntpdate",
+			"hostname",
+			"/etc/mrtg",
+			"mrtg",
+			"ip_conntrack",
+			"sysstat",
+			"mv",
+			"iptables",
+			"iptables_ini",
+			"iptables",
+			"fail2ban",
+			"PAM",
+			"GSSAPIAuthentication",
+			"ssh",
+			"nrpe",
+			"check_conntrack",
+			"modprobe",
+			"/var/www/html",
+			"fail2ban",
+			"bash",
+			"eth1",
+			"rc.d",
+			"perl",
+			"service",
+			"mrtg",
+			"22",
+			"bash",
+			"modprobe",
+			"locale",
+			"perl",
+			"bash",
+			"force-yes",
+			"logrotate",
+			"logrotate.d",
+			"httpd",
+			"**NOT",
+			"chkconfig",
+			"sixwaves",
+			"deploy_script=",
+			"conntrack",
+			"nrpe",
+			"deploy_script",
+			"keys",
+			"6waves",
+			"6wave",
+			"6wavs",
+			"6waves",
+			"newuser",
+			"service fail2ban",
+			"shadow",
+			"newhostname",
+			"deploy_script",
+			"fs",
+			"tmpfs",
+			"$(",
+			"mrtg.tar",
+			"mrtg",
+			"tar",
+			"tar -c",
+			"tar",
+			"nf_",
+			"aliases",
+			"provider",
+			"sysctl -w",
+			"aa",
+			"aac",
+			"9.10",
+			"account",
+			"#\\",
+			"sed -e",
+			"-e"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1811,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								491,
+								491
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 0
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "price/calc.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8705,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								295,
+								295
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"highlight_line": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 8
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "price/price.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22107,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								38,
+								38
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<?php",
+							"highlight_line": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 32
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 236.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1700,
+								1700
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# ipsec.conf - strongSwan IPsec configuration file",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": true,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_insert",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 22
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 649,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								648,
+								648
+							]
+						],
+						"settings":
+						{
+							"auto_name": "config setup",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true,
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"_vintageous_non_interactive": false,
+								"_vintageous_processing_notation": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 25
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2037,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2036,
+								2036
+							]
+						],
+						"settings":
+						{
+							"auto_name": "strongswan pki --self --ca --lifetime 3650 --in ip",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 68
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2367,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1167,
+								1167
+							]
+						],
+						"settings":
+						{
+							"auto_name": "# Root Key & Cert",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 18
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 298.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1895,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1895,
+								1895
+							]
+						],
+						"settings":
+						{
+							"auto_name": "Aug 10 14:30:51 Shings-MacBook-Pro nesessionmanage",
+							"highlight_line": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"vintage":
+							{
+								"_vintageous_glue_until_normal_mode": false,
+								"action": null,
+								"action_count": "",
+								"mode": "mode_normal",
+								"motion": null,
+								"motion_count": "",
+								"must_capture_register_name": false,
+								"normal_insert_count": "1",
+								"partial_sequence": "",
+								"register": "\"",
+								"sequence": "",
+								"xpos": 0
+							}
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "tools.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"_vintageous_last_buffer_search": "dp",
+		"_vintageous_last_buffer_search_command": "vi_slash",
+		"_vintageous_last_char_search_command": "vi_t",
+		"_vintageous_last_character_search": " ",
+		"_vintageous_reset_during_init": true,
+		"vintage":
+		{
+			"_cmdline_cd": "/Applications/Sublime Text.app/Contents/MacOS"
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 233.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

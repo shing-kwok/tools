@@ -1,0 +1,82 @@
+# Root Key & Cert
+sudo su -
+cd /etc/strongswan/
+strongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/rootKey.pem
+chmod 600 ipsec.d/private/rootKey.pem
+
+strongswan pki --self --ca --lifetime 3650 \
+--in ipsec.d/private/rootKey.pem \
+--type rsa --dn "C=HK, O=Six Waves Inc, CN=6waves VPN Root CA" \
+--outform pem > ipsec.d/cacerts/rootCert.pem
+
+
+# Host Key & Cert
+strongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/hostKey.pem
+chmod 600 ipsec.d/private/hostKey.pem
+
+strongswan pki --pub --in ipsec.d/private/hostKey.pem \
+--type rsa | strongswan pki --issue --lifetime 1825 \
+--cacert ipsec.d/cacerts/rootCert.pem \
+--cakey ipsec.d/private/rootKey.pem \
+--dn "C=HK, O=Six Waves Inc, CN=lw1.6waves.org" \
+--san "lw1.6waves.com" \
+--flag serverAuth --flag ikeIntermediate \
+--outform pem > ipsec.d/certs/hostCert.pem
+
+
+# IPSec config
+cp -a ipsec.conf ipsec.conf.original
+echo "config setup
+    charondebug="ike 1, knl 1, cfg 0"
+    uniqueids=no
+
+conn ikev2-vpn
+    auto=add
+    compress=no
+    type=tunnel
+    keyexchange=ikev2
+    fragmentation=yes
+    forceencaps=yes
+    ike=aes256-sha1-modp1024,3des-sha1-modp1024!
+    esp=aes256-sha1,3des-sha1!
+    dpdaction=clear
+    dpddelay=300s
+    rekey=no
+    left=%any
+    leftid=@lw1.6waves.com
+    leftcert=/etc/strongswan/ipsec.d/certs/hostCert.pem
+    leftsendcert=always
+    leftsubnet=0.0.0.0/0
+    right=%any
+    rightid=%any
+    rightauth=eap-mschapv2
+    rightdns=8.8.8.8,8.8.4.4
+    rightsourceip=10.10.10.0/24
+    rightsendcert=never
+    eap_identity=%identity" > ipsec.conf
+
+echo "lw1.6waves.com : RSA \"/etc/strongswan/ipsec.d/private/hostKey.pem\"
+
+6w-mobile %any% : EAP \"6wMobileVPN\"" > ipsec.secrets
+strongswan start
+
+
+# Client Key, Cert & P12 package
+strongswan pki --gen --type rsa --size 4096 --outform pem > ipsec.d/private/clientKey.pem
+chmod 600 ipsec.d/private/clientKey.pem
+
+strongswan pki --pub --in ipsec.d/private/clientKey.pem \
+--type rsa | strongswan pki --issue --lifetime 730 \
+--cacert ipsec.d/cacerts/rootCert.pem \
+--cakey ipsec.d/private/rootKey.pem \
+--dn "C=HK, O=Six Waves Inc, CN=mobilelog@6waves.com" \
+--san "mobilelog@6waves.com" \
+--san "65.93.165.50" \
+--outform pem > ipsec.d/certs/clientCert.pem
+
+openssl pkcs12 -export -inkey ipsec.d/private/clientKey.pem -in ipsec.d/certs/clientCert.pem -name "6waves VPN Certificate" -certfile ipsec.d/cacerts/rootCert.pem -caname "6waves VPN Root CA" -out 6waves.p12
+
+# TODO? iptables setup
+
+
+# TODO? strongswan fips mode
